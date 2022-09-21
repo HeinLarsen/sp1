@@ -1,14 +1,31 @@
 class Bullet {
-  float speed, bXpos, bYpos;
-  Bullet() {
+  int speed;
+  float x;
+  float y;
+  float angel;
+
+  Bullet(float xpos, float ypos, float angel) {
     speed = 10;
+    x = xpos;
+    y = ypos;
+    this.angel = angel;
   }
 
-  void display(ArrayList<Bullet> bullets, float xpos, float ypos, float angel) {
-    bullet(xpos, ypos, angel);
+  void run() {
+    render();
+    move();
   }
 
-  void bullet(float xpos, float ypos, float angel) {
-    rect(500, 500, 10, 40);
+  void render() {
+    pushMatrix();
+    translate(x, y);
+    rotate(angel);
+    rect(0, 0, 10, 40);
+    popMatrix();
+  }
+
+  void move() {
+    x += sin(angel) * speed;
+    y -= cos(angel) * speed;
   }
 }
