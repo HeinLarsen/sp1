@@ -1,12 +1,13 @@
 Player p1;
 ArrayList<Enemy> enemies = new ArrayList<Enemy>();
+boolean debug = true;
 
 void setup() {
   size(1920, 1080);
   shapeMode(CENTER);
   rectMode(CENTER);
   p1 = new Player();
-  for (int i = 0; i < 10; i++) {
+  for (int i = 0; i < 1; i++) {
     enemies.add(new Enemy());
     enemies.get(i).startPos();
   }
@@ -32,17 +33,21 @@ void movement() {
       p1.right();
     }
     if (keyCode == UP) {
-      p1.addBullet(new Bullet(p1.xpos, p1.ypos, p1.angel));
+      p1.addBullet(new Bullet(p1.loc.x, p1.loc.y, p1.angle));
     }
   }
 }
 
+float calcAtan(float x1, float x2, float y1, float y2) {
+  return atan2(y2 - y1, x2 - x1) * 180 / PI;
+}
+
 void deletePlane() {
-  for (int i = 0; i <enemies.size(); i++) {
-    Enemy en = enemies.get(i); 
-    if (en.xpos < -en.padding || en.ypos < -en.padding || en.xpos > width+en.padding || en.ypos > height+en.padding) {
-      enemies.remove(i);
+  for (int i = 0; i < enemies.size(); i++) {
+    Enemy en = enemies.get(i);
+    if (en.loc.x < -en.padding || en.loc.y < -en.padding || en.loc.x > width+en.padding || en.loc.y > height+en.padding) {
       println("Removed " + i);
+      enemies.remove(i);
     }
   }
 }

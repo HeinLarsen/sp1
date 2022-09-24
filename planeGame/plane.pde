@@ -1,7 +1,11 @@
 class Plane {
-  float speed, xpos, ypos, angel, w, padding;
+  float speed, xpos, ypos, angle, w, padding;
   ArrayList<Bullet> bullets;
   int life;
+  PVector loc;
+  PVector velocity;
+  PVector acceleration;
+  float topspeed;
   PShape s;
 
   public Plane() {
@@ -12,12 +16,30 @@ class Plane {
 
 
   void display() {
+    PVector mouse = new PVector(xpos, ypos);
+    PVector acceleration = PVector.sub(mouse, loc);
+    acceleration.setMag(0.5);
+    velocity.add(acceleration);
+    // Limit the velocity by topspeed
+    velocity.limit(topspeed);
+    // Location changes by velocity
+    loc.add(velocity);
     s.resetMatrix();
-    s.translate(xpos, ypos);
-    s.rotate(angel);
+    s.translate(loc.x, loc.y);
+    s.rotate(radians(atan2(loc.y - ypos, loc.x - xpos) * 180 / PI));
     shape(s);
-    xpos += sin(angel) * speed;
-    ypos -= cos(angel) * speed;
+
+
+    // chaser
+    xpos += sin(angle) * speed;
+    ypos -= cos(angle) * speed;
+    pushMatrix();
+    translate(xpos, ypos);
+    rotate(angle);
+    if (debug) {
+      rect(0, 0, 10, 20);
+    }
+    popMatrix();
     for (Bullet b : bullets) {
       b.run();
     }
@@ -26,11 +48,11 @@ class Plane {
 
 
   void left() {
-    angel -= radians(w);
+    angle -= radians(w);
   }
 
   void right() {
-    angel += radians(w);
+    angle += radians(w);
   }
 
   void addBullet(Bullet b) {

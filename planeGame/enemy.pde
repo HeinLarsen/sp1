@@ -1,51 +1,59 @@
 class Enemy extends Plane {
-  boolean flip = false;
-
+  boolean flipping = false;
+  int time;
   public Enemy() {
-    xpos = width/2;
-    ypos = height/2;
+    xpos = 0;
+    ypos = 0;
     life = 3;
-    speed = 5;
-    angel = radians(0);
-    w = 7;
+    speed = 4;
+    angle = radians(0);
+    w = 4;
+    loc = new PVector(0, 0);
+    velocity = new PVector(0, 0);
+    topspeed = 4;
     s = createShape(RECT, 0, 0, 40, 82);
     s.setFill(color(255, 0, 0));
+    padding = 50;
   }
 
   void run() {
     display();
-    borders();
+      borders();
+    //flip();
   }
 
   void startPos() {
-    xpos = random(width);
-    ypos = random(height);
-    angel = radians(random(360));
+    loc.x = random(20, width - 20);
+    loc.y = random(20, height - 20);
+    angle = radians(calcAtan(loc.y, height/2, loc.x, width/2));
+
+    xpos = loc.x + 100;
+    ypos = loc.y + 100;
+
   }
 
   void borders() {
-    if (xpos < padding && !flip) flip();
-    if (ypos < padding && !flip) flip();
-    if (xpos > width-padding && !flip) flip();
-    if (ypos > height-padding && !flip) flip();
+    if (xpos < padding || xpos > width-padding) flip();
+    else if (ypos < padding || ypos > height-padding) flip();
   }
 
   void flip() {
-    flip = true;
-    float xCenter = width/2;
-    float yCenter = height/2;
+ 
+    if (time < millis()) {
 
-    float c = cos(yCenter - ypos);
-    float s = sin(xCenter - xpos);
+      println("flipping");
+      time = millis() + 250;
+      float c = calcAtan(height/2, ypos, width/2, xpos);
+      println(c);
 
-    if (c > s) {
-      while (c != angel) {
-        left();
-      }
-    } else {
-      while (s != angel) {
-        right();
-      }
+      angle = radians(c);
+      //for (int i = 0; i < +c; i++) {
+      //  if (c < 0) {
+      //    left();
+      //  } else {
+      //    right();
+      //  }
+      //}
     }
   }
 }

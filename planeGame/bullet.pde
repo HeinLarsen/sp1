@@ -1,14 +1,14 @@
 class Bullet {
   int speed;
-  float x;
-  float y;
-  float angel;
+  float xpos;
+  float ypos;
+  float angle;
 
-  Bullet(float xpos, float ypos, float angel) {
+  Bullet(float xpos, float ypos, float angle) {
     speed = 10;
-    x = xpos;
-    y = ypos;
-    this.angel = angel;
+    this.xpos = xpos;
+    this.ypos = ypos;
+    this.angle = angle;
   }
 
   void run() {
@@ -18,14 +18,14 @@ class Bullet {
 
   void render() {
     pushMatrix();
-    translate(x, y);
-    rotate(angel);
+    translate(xpos, ypos);
+    rotate(angle);
     rect(0, 0, 3, 10);
     popMatrix();
   }
 
   void move() {
-    x += sin(angel) * speed;
-    y -= cos(angel) * speed;
+    xpos += sin(angle) * speed;
+    ypos -= cos(angle) * speed;
   }
 }
