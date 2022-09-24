@@ -1,31 +1,29 @@
 class Plane {
-  float speed, xpos, ypos, angel, w;
+  float speed, xpos, ypos, angel, w, padding;
   ArrayList<Bullet> bullets;
-  int id, life;
+  int life;
+  PShape s;
 
-  Plane() {
-    speed = 2;
-    xpos = width/2;
-    ypos = height/2;
-    angel = radians(0);
-    w = 5;
+  public Plane() {
+    padding = 40;
     bullets = new ArrayList<Bullet>();
-    id = int(random(1000));
   }
 
+
+
   void display() {
-    pushMatrix();
-    translate(xpos, ypos);
-    rotate(angel);
-    rect(0, 0, 40, 82);
+    s.resetMatrix();
+    s.translate(xpos, ypos);
+    s.rotate(angel);
+    shape(s);
     xpos += sin(angel) * speed;
     ypos -= cos(angel) * speed;
-    popMatrix();
     for (Bullet b : bullets) {
       b.run();
     }
-    
   }
+
+
 
   void left() {
     angel -= radians(w);
@@ -34,9 +32,8 @@ class Plane {
   void right() {
     angel += radians(w);
   }
-   
-   void addBullet(Bullet b) {
-     bullets.add(b);
-   }
 
+  void addBullet(Bullet b) {
+    bullets.add(b);
+  }
 }

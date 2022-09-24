@@ -20,7 +20,7 @@ class Bullet {
     pushMatrix();
     translate(x, y);
     rotate(angel);
-    rect(0, 0, 10, 40);
+    rect(0, 0, 3, 10);
     popMatrix();
   }
 
