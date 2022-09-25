@@ -4,6 +4,7 @@ class Plane {
   int life;
   PVector loc, vel, acc, dir;
   PShape s;
+  
 
   public Plane() {
     padding = 40;
@@ -33,7 +34,7 @@ class Plane {
     dir.y -= cos(angle) * speed;
     dir.normalize();
     acc = dir;
-    acc.setMag(0.5);
+    acc.setMag(0.7);
     vel.add(acc);
     vel.limit(speed);
     loc.add(vel);
