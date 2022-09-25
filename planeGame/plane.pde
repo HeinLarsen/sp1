@@ -7,9 +7,7 @@ class Plane {
   PVector acc;
   PVector dir;
   PShape s;
-
   float bulletTimer;
-  int id = int(random(0, 1000));
 
   public Plane() {
     padding = 40;

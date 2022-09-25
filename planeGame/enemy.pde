@@ -1,7 +1,10 @@
 class Enemy extends Plane {
   boolean flipping = false;
-  int timer;
+  int time;
+  int bulletCount = 0;
+  int reloadTime = 0;
   boolean playerClose = false;
+  boolean reload = false;
   float d;
   PVector aim;
 
@@ -9,7 +12,7 @@ class Enemy extends Plane {
 
   public Enemy() {
     life = 3;
-    speed = 3;
+    speed = 2.5;
     angle = radians(0);
     w = 4;
     loc = new PVector(0, 0);
@@ -26,15 +29,23 @@ class Enemy extends Plane {
     borders();
     searchPlayer();
 
-    if (playerClose && timer < millis())
+    if (playerClose && time < millis()) {
       findPlayer();
-    else
+    } else {
       movement();
+    }
+    
+    if(reloadTime < millis() && reload) {
+      reload = false;
+      bulletCount = 0;
+    }
   }
 
+
   void startPos() {
-    loc.x = width/2;
-    loc.y = height/2 + 400;
+    loc.x = random(20, width - 20);
+    loc.y = random(20, height - 20);
+    angle = radians(calcAtan(loc.y, height/2, loc.x, width/2));
   }
 
   void searchPlayer() {
@@ -43,20 +54,21 @@ class Enemy extends Plane {
   }
 
   void findPlayer() {
-    if (d > 200 && d < 500) {
+    if (d > 300 && d < 350) {
       dir = PVector.sub(p1.loc, loc);
       dir.normalize();
       acc = dir;
       vel.add(acc);
       vel.limit(speed);
       loc.add(vel);
-    } else if (d > 100 && d < 200) {
+    } else if (d > 150 && d < 300) {
       float xHeading = p1.loc.x + cos(p1.dir.heading()) * 100;
       float yHeading = p1.loc.y + sin(p1.dir.heading()) * 100;
 
-      ellipse(xHeading, yHeading, 20, 20);
+      //ellipse(xHeading, yHeading, 20, 20);
 
       aim = new PVector(xHeading, yHeading);
+
 
       dir = PVector.sub(aim, loc);
       dir.normalize();
@@ -68,36 +80,37 @@ class Enemy extends Plane {
       loc.add(vel);
 
 
-      addBullet(new Bullet(loc.x, loc.y, angle));
+
+      if (!reload && bulletTimer < millis()) {
+        addBullet(new Bullet(loc.x, loc.y, angle));
+        bulletTimer = millis() + 150;
+        bulletCount++;
+        if (bulletCount == 3) {
+          reloadTime = millis() + 1500;
+          reload = true;
+        }
+      }
     } else {
       playerClose = false;
       dir.rotate(25);
-      timer = millis() + 500;
+      time = millis() + 250;
     }
-
-    ////// this works for shooting
-    //float dir = (c - angle) / TWO_PI;
-    //dir -= round(dir);
-    //dir *= TWO_PI;
-    //println(dir);
-    ////angle += dir;
   }
 
 
 
 
   void borders() {
-    if (loc.x < padding && !flipping) flip();
-    if (loc.y < padding && !flipping) flip();
-    if (loc.x > width-padding && !flipping) flip();
-    if (loc.y > height-padding && !flipping) flip();
+    if (loc.x < -padding) loc.x = width+padding;
+    if (loc.y < -padding) loc.y = height+padding;
+    if (loc.x > width+padding) loc.x = -padding;
+    if (loc.y > height+padding) loc.y = -padding;
   }
 
   void flip() {
     flipping = true;
 
-    float c = calcAtan(width/2, loc.x, height/2, loc.y);
-    acc.rotate(c);
+    angle = radians(calcAtan(height/2, loc.y, width/2, loc.x));
 
     flipping = false;
   }

@@ -8,7 +8,7 @@ void setup() {
   shapeMode(CENTER);
   rectMode(CENTER);
   p1 = new Player();
-  for (int i = 0; i < 1; i++) {
+  for (int i = 0; i < 2; i++) {
     enemies.add(new Enemy());
     enemies.get(i).startPos();
   }
@@ -22,7 +22,7 @@ void draw() {
   };
   playerControl();
   p1.run();
-  deletePlane();
+  //deletePlane();
 }
 
 void playerControl() {
