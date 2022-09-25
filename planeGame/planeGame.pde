@@ -1,6 +1,7 @@
 Player p1;
 ArrayList<Enemy> enemies = new ArrayList<Enemy>();
 boolean debug = true;
+PVector center = new PVector(width/2, height/2);
 
 void setup() {
   size(1920, 1080);
@@ -19,12 +20,12 @@ void draw() {
   for (int i = 0; i < enemies.size(); i++) {
     enemies.get(i).run();
   };
-  movement();
+  playerControl();
   p1.run();
   deletePlane();
 }
 
-void movement() {
+void playerControl() {
   if (keyPressed) {
     if (keyCode == LEFT) {
       p1.left();

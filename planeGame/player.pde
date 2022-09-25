@@ -2,11 +2,13 @@ class Player extends Plane {
 
   public Player() {
     life = 3;
-    speed = 3;
+    speed = 4;
     angle = radians(0);
     w = 4;
     loc = new PVector(width/2, height/2);
-    vel = new PVector(0,10);
+    vel = new PVector(0,0);
+    acc = new PVector(0,0);
+    dir = new PVector(0,0);
     padding = 40;
     s = createShape(RECT, 0, 0, 20, 40);
     s.setFill(color(255, 255, 255));
@@ -14,6 +16,7 @@ class Player extends Plane {
 
   void run() {
     display();
+    movement();
     borders();
     hitDetection();
 

@@ -4,7 +4,10 @@ class Plane {
   int life;
   PVector loc;
   PVector vel;
+  PVector acc;
+  PVector dir;
   PShape s;
+
   float bulletTimer;
   int id = int(random(0, 1000));
 
@@ -13,19 +16,12 @@ class Plane {
     bullets = new ArrayList<Bullet>();
   }
 
-
-
   void display() {
-    vel.x += sin(angle) * speed;
-    vel.y -= cos(angle) * speed;
-    vel.limit(speed);
-    loc.add(vel);
-    
+
     s.resetMatrix();
     s.translate(loc.x, loc.y);
-    s.rotate(vel.heading());
+    s.rotate(acc.heading());
     shape(s);
-    
     //pushMatrix();
     //translate(vel.x, vel.y);
     //rotate(vel.heading());
@@ -36,6 +32,17 @@ class Plane {
     for (Bullet b : bullets) {
       b.run();
     }
+  }
+
+  void movement() {
+    dir.x += sin(angle) * speed;
+    dir.y -= cos(angle) * speed;
+    dir.normalize();
+    acc = dir;
+    acc.setMag(0.5);
+    vel.add(acc);
+    vel.limit(speed);
+    loc.add(vel);
   }
 
   void hitDetection() {
@@ -61,10 +68,12 @@ class Plane {
 
   void left() {
     angle -= radians(w);
+    dir.rotate(-0.1);
   }
 
   void right() {
     angle += radians(w);
+    dir.rotate(0.1);
   }
 
   void addBullet(Bullet b) {
