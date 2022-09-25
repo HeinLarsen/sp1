@@ -107,11 +107,5 @@ class Enemy extends Plane {
     if (loc.y > height+padding) loc.y = -padding;
   }
 
-  void flip() {
-    flipping = true;
 
-    angle = radians(calcAtan(height/2, loc.y, width/2, loc.x));
-
-    flipping = false;
-  }
 }

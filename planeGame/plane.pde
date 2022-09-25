@@ -1,13 +1,9 @@
 class Plane {
-  float speed, angle, w, padding;
+  float speed, angle, w, padding, bulletTimer;
   ArrayList<Bullet> bullets;
   int life;
-  PVector loc;
-  PVector vel;
-  PVector acc;
-  PVector dir;
+  PVector loc, vel, acc, dir;
   PShape s;
-  float bulletTimer;
 
   public Plane() {
     padding = 40;
