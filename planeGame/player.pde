@@ -2,7 +2,7 @@ class Player extends Plane {
 
   public Player() {
     life = 3;
-    speed = 4;
+    speed = 5;
     angle = radians(0);
     w = 4;
     loc = new PVector(width/2, height/2);
@@ -17,6 +17,7 @@ class Player extends Plane {
   }
 
   void run() {
+    dir = new PVector(mouseX, mouseY);
     movement();
     borders();
     hitDetection();

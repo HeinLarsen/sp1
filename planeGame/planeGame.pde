@@ -8,7 +8,7 @@ void setup() {
   rectMode(CENTER);
   imageMode(CENTER);
   p1 = new Player();
-  for (int i = 0; i < 5; i++) {
+  for (int i = 0; i < 1; i++) {
     enemies.add(new Enemy());
     enemies.get(i).startPos();
   }
@@ -25,16 +25,8 @@ void draw() {
 }
 
 void playerControl() {
-  if (keyPressed) {
-    if (keyCode == LEFT) {
-      p1.left();
-    }
-    if (keyCode == RIGHT) {
-      p1.right();
-    }
-    if (keyCode == UP) {
-      p1.addBullet(new Bullet(p1.loc.x, p1.loc.y, p1.angle));
-    }
+    if (mousePressed == true) {
+      p1.addBullet(new Bullet(p1.loc.x, p1.loc.y, p1.vel.heading() + radians(90) ));
   }
 }
 

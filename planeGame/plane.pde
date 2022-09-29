@@ -15,12 +15,12 @@ class Plane {
   void display() {
     s.resetMatrix();
     s.translate(loc.x, loc.y);
-    s.rotate(angle);
+    s.rotate(vel.heading() + radians(90));
     shape(s);
 
     pushMatrix();
     translate(loc.x, loc.y);
-    rotate(angle);
+    rotate(vel.heading() + radians(90));
     image(pl, 0, 0);
     popMatrix();
 
@@ -31,28 +31,13 @@ class Plane {
 
   void movement() {
 
-    dir.x += sin(angle) * speed;
-    dir.y -= cos(angle) * speed;
-    dir.normalize();
 
-    acc = dir;
-    acc.setMag(0.7);
+    PVector acc = PVector.sub(dir, loc);
+    acc.setMag(0.2);
 
     vel.add(acc);
     vel.limit(speed);
-
     loc.add(vel);
-    //PVector mouse = new PVector(mouseX, mouseY);
-    //PVector acc = PVector.sub(mouse, loc);
-    //// Set magnitude of acceleration
-    //acc.setMag(0.2);
-
-    //// Velocity changes according to acceleration
-    //vel.add(acc);
-    //// Limit the velocity by topspeed
-    //vel.limit(speed);
-    //// Location changes by velocity
-    //loc.add(vel);
   }
 
   void hitDetection() {
@@ -72,18 +57,6 @@ class Plane {
         }
       }
     }
-  }
-
-
-
-  void left() {
-    angle -= radians(w);
-    dir.rotate(-0.1);
-  }
-
-  void right() {
-    angle += radians(w);
-    dir.rotate(0.1);
   }
 
   void addBullet(Bullet b) {

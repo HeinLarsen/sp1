@@ -19,8 +19,8 @@ class Enemy extends Plane {
     loc = new PVector(0, 0);
     vel = new PVector(0, 0);
     acc = new PVector(0, 0);
-    dir = new PVector(0, 0);
-    
+    dir = new PVector(random(2000), random(2000));
+
     pl = loadImage("evil spit.png");
     s = createShape(RECT, 0, 0, 20, 40);
     s.setFill(false);
@@ -29,6 +29,8 @@ class Enemy extends Plane {
   }
 
   void run() {
+    dir.x += sin(dir.heading()) * speed;
+    dir.y -= cos(dir.heading()) * speed;
     borders();
     searchPlayer();
 
@@ -48,47 +50,53 @@ class Enemy extends Plane {
 
 
   void startPos() {
-    loc.x = random(random(0, width/4), random(width/2 + 300, width) );
-    loc.y = random(random(0, height/4), random(height/2 + 300, height));
+    loc.x = random(random(0, width/2 - 400), random(width/2 + 500, width) );
+    loc.y = random(random(0, height/2 - 400), random(height/2 + 500, height));
     angle = atan2(height/2 - loc.y, width/2 - loc.x);
   }
 
   void searchPlayer() {
     d = PVector.dist(p1.loc, loc);
-    playerClose = d < 400 ? true : false;
+    playerClose = d < 300 ? true : false;
   }
 
   void findPlayer() {
-    if (d > 250 && d < 400) {
-      dir = PVector.sub(p1.loc, loc);
-      dir.normalize();
-      dir.mult(0.5);
-      acc = dir;
-      angle = acc.heading() + radians(90);
+    if (d > 250 && d < 300) {
+      
+      PVector acc = PVector.sub(p1.loc, loc);
+      // Set magnitude of acceleration
+      acc.setMag(0.2);
+
+      // Velocity changes according to acceleration
       vel.add(acc);
+      // Limit the velocity by topspeed
       vel.limit(speed);
+      // Location changes by velocity
       loc.add(vel);
     } else if (d > 0 && d < 250) {
-      float xHeading = p1.loc.x + cos(p1.dir.heading()) * 100;
-      float yHeading = p1.loc.y + sin(p1.dir.heading()) * 100;
+      
+      float distance = dist(loc.x, loc.y, p1.loc.x, p1.loc.y);
+      float xHeading = p1.loc.x + cos(p1.vel.heading()) * distance;
+      float yHeading = p1.loc.y + sin(p1.vel.heading()) * distance;
 
 
 
       aim = new PVector(xHeading, yHeading);
+      
+      
 
+      PVector acc = PVector.sub(aim, loc);
+      // Set magnitude of acceleration
+      acc.setMag(0.2);
 
-
-      dir = PVector.sub(aim, loc);
-      dir.normalize();
-      acc = dir;
-      angle = acc.heading() + radians(90);
+      // Velocity changes according to acceleration
       vel.add(acc);
+      // Limit the velocity by topspeed
       vel.limit(speed);
+      // Location changes by velocity
       loc.add(vel);
-
-
       if (!reload && bulletTimer < millis()) {
-        addBullet(new Bullet(loc.x, loc.y, angle));
+        addBullet(new Bullet(loc.x, loc.y, (vel.heading() + radians(90)) ));
         bulletTimer = millis() + 150;
         bulletCount++;
         if (bulletCount == 3) {
