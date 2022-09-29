@@ -74,7 +74,6 @@ class Enemy extends Plane {
       loc.add(vel);
     } else if (d > 0 && d < 250) {
 
-      float distance = dist(loc.x, loc.y, p1.loc.x, p1.loc.y);
       float xHeading = p1.loc.x + cos(p1.vel.heading()) * 200;
       float yHeading = p1.loc.y + sin(p1.vel.heading()) * 200;
 
