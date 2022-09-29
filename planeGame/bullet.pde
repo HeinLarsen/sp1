@@ -5,7 +5,7 @@ class Bullet {
   float angle;
 
   Bullet(float xpos, float ypos, float angle) {
-    speed = 10;
+    speed = 12;
     this.xpos = xpos;
     this.ypos = ypos;
     this.angle = angle;

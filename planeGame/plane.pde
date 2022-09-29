@@ -33,7 +33,7 @@ class Plane {
 
 
     PVector acc = PVector.sub(dir, loc);
-    acc.setMag(0.2);
+    acc.setMag(0.3);
 
     vel.add(acc);
     vel.limit(speed);
@@ -61,7 +61,7 @@ class Plane {
 
   void addBullet(Bullet b) {
     if (bulletTimer < millis()) {
-      bulletTimer = millis() + 250;
+      bulletTimer = millis() + 150;
       bullets.add(b);
     }
   }

@@ -12,7 +12,7 @@ class Enemy extends Plane {
 
   public Enemy() {
     life = 3;
-    speed = 3;
+    speed = 5;
     angle = radians(0);
     w = 4;
     loc = new PVector(0, 0);
@@ -75,8 +75,8 @@ class Enemy extends Plane {
     } else if (d > 0 && d < 250) {
 
       float distance = dist(loc.x, loc.y, p1.loc.x, p1.loc.y);
-      float xHeading = p1.loc.x + cos(p1.vel.heading()) * distance;
-      float yHeading = p1.loc.y + sin(p1.vel.heading()) * distance;
+      float xHeading = p1.loc.x + cos(p1.vel.heading()) * 200;
+      float yHeading = p1.loc.y + sin(p1.vel.heading()) * 200;
 
 
 
