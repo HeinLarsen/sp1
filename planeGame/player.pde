@@ -22,7 +22,6 @@ class Player extends Plane {
     borders();
     hitDetection();
     display();
-    
   }
 
   void borders() {

@@ -2,13 +2,14 @@ Player p1;
 ArrayList<Enemy> enemies = new ArrayList<Enemy>();
 PVector center = new PVector(width/2, height/2);
 
+
 void setup() {
   size(1920, 1080);
   shapeMode(CENTER);
   rectMode(CENTER);
   imageMode(CENTER);
   p1 = new Player();
-  for (int i = 0; i < 1; i++) {
+  for (int i = 0; i < 5; i++) {
     enemies.add(new Enemy());
     enemies.get(i).startPos();
   }

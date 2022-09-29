@@ -1,5 +1,4 @@
 class Enemy extends Plane {
-  boolean flipping = false;
   int time;
   int bulletCount = 0;
   int reloadTime = 0;
@@ -62,7 +61,7 @@ class Enemy extends Plane {
 
   void findPlayer() {
     if (d > 250 && d < 300) {
-      
+
       PVector acc = PVector.sub(p1.loc, loc);
       // Set magnitude of acceleration
       acc.setMag(0.2);
@@ -74,7 +73,7 @@ class Enemy extends Plane {
       // Location changes by velocity
       loc.add(vel);
     } else if (d > 0 && d < 250) {
-      
+
       float distance = dist(loc.x, loc.y, p1.loc.x, p1.loc.y);
       float xHeading = p1.loc.x + cos(p1.vel.heading()) * distance;
       float yHeading = p1.loc.y + sin(p1.vel.heading()) * distance;
@@ -82,8 +81,8 @@ class Enemy extends Plane {
 
 
       aim = new PVector(xHeading, yHeading);
-      
-      
+
+
 
       PVector acc = PVector.sub(aim, loc);
       // Set magnitude of acceleration
