@@ -6,20 +6,21 @@ class Player extends Plane {
     angle = radians(0);
     w = 4;
     loc = new PVector(width/2, height/2);
-    vel = new PVector(0,0);
-    acc = new PVector(0,0);
-    dir = new PVector(0,0);
+    vel = new PVector(0, 0);
+    acc = new PVector(0, 0);
+    dir = new PVector(0, 0);
     padding = 40;
+    pl = loadImage("spitfire.png");
     s = createShape(RECT, 0, 0, 20, 40);
-    s.setFill(color(255, 255, 255));
+    s.setFill(false);
+    s.setStroke(false);
   }
 
   void run() {
-    display();
     movement();
     borders();
     hitDetection();
-
+    display();
   }
 
   void borders() {

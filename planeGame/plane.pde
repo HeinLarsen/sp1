@@ -4,7 +4,8 @@ class Plane {
   int life;
   PVector loc, vel, acc, dir;
   PShape s;
-  
+  PImage pl;
+
 
   public Plane() {
     padding = 40;
@@ -12,17 +13,16 @@ class Plane {
   }
 
   void display() {
-
     s.resetMatrix();
     s.translate(loc.x, loc.y);
-    s.rotate(acc.heading());
+    s.rotate(angle);
     shape(s);
-    //pushMatrix();
-    //translate(vel.x, vel.y);
-    //rotate(vel.heading());
-    //rect(0,0,10,20);
-    //popMatrix();
 
+    pushMatrix();
+    translate(loc.x, loc.y);
+    rotate(angle);
+    image(pl, 0,0);
+    popMatrix();
 
     for (Bullet b : bullets) {
       b.run();
@@ -33,10 +33,13 @@ class Plane {
     dir.x += sin(angle) * speed;
     dir.y -= cos(angle) * speed;
     dir.normalize();
+    
     acc = dir;
     acc.setMag(0.7);
+    
     vel.add(acc);
     vel.limit(speed);
+    
     loc.add(vel);
   }
 
