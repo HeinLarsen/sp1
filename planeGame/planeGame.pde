@@ -8,7 +8,7 @@ void setup() {
   rectMode(CENTER);
   imageMode(CENTER);
   p1 = new Player();
-  for (int i = 0; i < 1; i++) {
+  for (int i = 0; i < 5; i++) {
     enemies.add(new Enemy());
     enemies.get(i).startPos();
   }

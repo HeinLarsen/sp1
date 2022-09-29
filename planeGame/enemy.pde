@@ -7,6 +7,7 @@ class Enemy extends Plane {
   boolean reload = false;
   float d;
   PVector aim;
+  float angleToPlayer;
 
 
 
@@ -19,6 +20,7 @@ class Enemy extends Plane {
     vel = new PVector(0, 0);
     acc = new PVector(0, 0);
     dir = new PVector(0, 0);
+    
     pl = loadImage("evil spit.png");
     s = createShape(RECT, 0, 0, 20, 40);
     s.setFill(false);
@@ -46,18 +48,18 @@ class Enemy extends Plane {
 
 
   void startPos() {
-    loc.x = random(20, width - 20);
-    loc.y = random(20, height - 20);
-    angle = radians(calcAtan(height/2, loc.y, width/2, loc.x));
+    loc.x = random(random(0, width/4), random(width/2 + 300, width) );
+    loc.y = random(random(0, height/4), random(height/2 + 300, height));
+    angle = atan2(height/2 - loc.y, width/2 - loc.x);
   }
 
   void searchPlayer() {
     d = PVector.dist(p1.loc, loc);
-    playerClose = d < 500 ? true : false;
+    playerClose = d < 400 ? true : false;
   }
 
   void findPlayer() {
-    if (d > 250 && d < 500) {
+    if (d > 250 && d < 400) {
       dir = PVector.sub(p1.loc, loc);
       dir.normalize();
       dir.mult(0.5);
@@ -67,12 +69,10 @@ class Enemy extends Plane {
       vel.limit(speed);
       loc.add(vel);
     } else if (d > 0 && d < 250) {
-      float distance = dist(loc.x, loc.y, p1.loc.x, p1.loc.y);
-      float xHeading = p1.loc.x + cos(p1.dir.heading()) * distance;
-      float yHeading = p1.loc.y + sin(p1.dir.heading()) * distance;
+      float xHeading = p1.loc.x + cos(p1.dir.heading()) * 100;
+      float yHeading = p1.loc.y + sin(p1.dir.heading()) * 100;
 
 
-      ellipse(xHeading, yHeading, 20, 20);
 
       aim = new PVector(xHeading, yHeading);
 
@@ -80,14 +80,11 @@ class Enemy extends Plane {
 
       dir = PVector.sub(aim, loc);
       dir.normalize();
-      //dir.mult(0.5);
       acc = dir;
       angle = acc.heading() + radians(90);
       vel.add(acc);
       vel.limit(speed);
       loc.add(vel);
-
-      line(loc.x, loc.y, aim.x, aim.y);
 
 
       if (!reload && bulletTimer < millis()) {

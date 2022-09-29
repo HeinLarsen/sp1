@@ -21,7 +21,7 @@ class Plane {
     pushMatrix();
     translate(loc.x, loc.y);
     rotate(angle);
-    image(pl, 0,0);
+    image(pl, 0, 0);
     popMatrix();
 
     for (Bullet b : bullets) {
@@ -30,17 +30,29 @@ class Plane {
   }
 
   void movement() {
+
     dir.x += sin(angle) * speed;
     dir.y -= cos(angle) * speed;
     dir.normalize();
-    
+
     acc = dir;
     acc.setMag(0.7);
-    
+
     vel.add(acc);
     vel.limit(speed);
-    
+
     loc.add(vel);
+    //PVector mouse = new PVector(mouseX, mouseY);
+    //PVector acc = PVector.sub(mouse, loc);
+    //// Set magnitude of acceleration
+    //acc.setMag(0.2);
+
+    //// Velocity changes according to acceleration
+    //vel.add(acc);
+    //// Limit the velocity by topspeed
+    //vel.limit(speed);
+    //// Location changes by velocity
+    //loc.add(vel);
   }
 
   void hitDetection() {
