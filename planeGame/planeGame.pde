@@ -1,10 +1,8 @@
 Player p1;
 ArrayList<Enemy> enemies = new ArrayList<Enemy>();
-PVector center = new PVector(width/2, height/2);
-
 
 void setup() {
-  size(1920, 1080);
+  size(1280, 720);
   shapeMode(CENTER);
   rectMode(CENTER);
   imageMode(CENTER);

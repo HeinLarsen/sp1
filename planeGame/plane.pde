@@ -1,5 +1,5 @@
 class Plane {
-  float speed, angle, w, padding, bulletTimer;
+  float speed, angle, padding, bulletTimer;
   ArrayList<Bullet> bullets;
   int life;
   PVector loc, vel, acc, dir;
@@ -13,16 +13,18 @@ class Plane {
   }
 
   void display() {
-    s.resetMatrix();
-    s.translate(loc.x, loc.y);
-    s.rotate(vel.heading() + radians(90));
-    shape(s);
-
     pushMatrix();
     translate(loc.x, loc.y);
     rotate(vel.heading() + radians(90));
     image(pl, 0, 0);
     popMatrix();
+    
+    s.resetMatrix();
+    s.translate(loc.x, loc.y);
+    s.rotate(vel.heading() + radians(90));
+    shape(s);
+
+    
 
     for (Bullet b : bullets) {
       b.run();
@@ -30,7 +32,6 @@ class Plane {
   }
 
   void movement() {
-
 
     PVector acc = PVector.sub(dir, loc);
     acc.setMag(0.3);

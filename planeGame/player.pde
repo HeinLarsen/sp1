@@ -3,8 +3,6 @@ class Player extends Plane {
   public Player() {
     life = 3;
     speed = 7;
-    angle = radians(0);
-    w = 4;
     loc = new PVector(width/2, height/2);
     vel = new PVector(0, 0);
     acc = new PVector(0, 0);
